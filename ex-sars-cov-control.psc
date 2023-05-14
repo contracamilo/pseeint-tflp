@@ -1,8 +1,10 @@
+
 Funcion registro <- registroEmpleados (empleados, n)
 	Definir x Como Cadena
 	Definir i Como Entero
 	Definir nombre, direccion, localidad, estadoSalud, temperatura, contactoCovid, comorbilidades, comorbilidadesFamilia, numConv, posible_contagio Como Cadena
 			
+
 	Para i <- 1 Hasta n Hacer
 		Escribir "Ingrese la información del empleado", i, ":"
 		
@@ -110,31 +112,6 @@ Funcion asiste <- analizarEmpleado(temperatura, contactoCovid, estadoSalud, TEMP
     asiste <- puedeAsistir
 FinFuncion
 
-Funcion listarEmpleadosDisponibles(empleados, n)
-    Definir i Como Entero
-    Definir puedeAsistir Como Logico
-	
-    Escribir "____________________________________________"
-    Escribir "LISTADO DE EMPLEADOS APTOS PARA TRABAJAR"
-    Escribir "____________________________________________"
-	
-    Para i <- 1 Hasta n Hacer
-	    TEMPERATURA_UMBRAL = "37.5";
-        puedeAsistir <- analizarEmpleado(empleados[i, 9], empleados[i, 10], empleados[i, 5], TEMPERATURA_UMBRAL)
-		
-	    Escribir "Empleado", i, ":"
-        Escribir "Nombre:", empleados[i, 1]
-        Escribir "Puede asistir al trabajo:"
-		
-		Si puedeAsistir Entonces 
-			Escribir "Sí"
-		SiNo
-			Escribir "No"
-		FinSi
-	    Escribir "____________________________________________"
-	FinPara
-FinFuncion
-
 
 Funcion actualizarDatosDiarios(empleados, n)
 	Definir numEmpleado Como Entero
@@ -167,6 +144,32 @@ Funcion actualizarDatosDiarios(empleados, n)
     FinSi
 FinFuncion
 
+Funcion listarEmpleadosDisponibles(empleados, n)
+    Definir i Como Entero
+    Definir puedeAsistir Como Logico
+	
+    Escribir "____________________________________________"
+    Escribir "LISTADO DE EMPLEADOS APTOS PARA TRABAJAR"
+    Escribir "____________________________________________"
+	
+    Para i <- 1 Hasta n Hacer
+	    TEMPERATURA_UMBRAL = "37.5";
+        puedeAsistir <- analizarEmpleado(empleados[i, 9], empleados[i, 10], empleados[i, 5], TEMPERATURA_UMBRAL)
+		
+	    Escribir "Empleado", i, ":"
+        Escribir "Nombre:", empleados[i, 1]
+        Escribir "Puede asistir al trabajo:"
+		
+		Si puedeAsistir Entonces 
+			Escribir "Sí"
+		SiNo
+			Escribir "No"
+		FinSi
+	    Escribir "____________________________________________"
+	FinPara
+FinFuncion
+
+
 
 Algoritmo ControlDatosPersonalesClinicosTrabajadores
 	
@@ -191,15 +194,28 @@ Algoritmo ControlDatosPersonalesClinicosTrabajadores
 		FinSi
 		
 		Si opcion == 2
-			imprimirMatriz(matriz_empleados, n)
+			Si n > 0
+				imprimirMatriz(matriz_empleados, n)
+			Sino
+				Escribir "No hay usuarios registrados"
+			FinSi
+			
 		FinSi
 		
 		Si opcion == 3
-			actualizarDatosDiarios(matriz_empleados, n)
+			Si n > 0
+				actualizarDatosDiarios(matriz_empleados, n)
+			Sino
+				Escribir "No hay usuarios registrados"
+			FinSi
 		FinSi
 		
-		Si opcion == 4
-			listarEmpleadosDisponibles(matriz_empleados, n)
+		Si opcion == 4	
+			Si n > 0
+				listarEmpleadosDisponibles(matriz_empleados, n)
+			Sino
+				Escribir "No hay usuarios registrados"
+			FinSi
 		FinSi
 		
 	Hasta Que (opcion == 0)
